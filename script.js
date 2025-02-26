@@ -1,9 +1,9 @@
 let parent = document.querySelector('#task-list');
 let input = document.querySelector('#valueInput');
 
-function addTask(){
+function addTask() {
 
-    if(input.value == ''){
+    if (input.value == '') {
         alert('Enter something in task box');
     } else {
         let li = document.createElement('li');
@@ -16,8 +16,26 @@ function addTask(){
 
     }
     input.value = "";
+    saveData();
 }
 
-document.querySelector('#task-list > li').addEventListener('click', ()=>{
-    
+parent.addEventListener('click', function (e) {
+    if (e.target.tagName == 'SPAN') {
+        e.target.parentNode.remove();
+        saveData();
+    } else if (e.target.tagName == 'LI') {
+        e.target.classList.toggle('checked');
+        saveData();
+    }
 })
+
+
+function saveData() {
+    localStorage.setItem('data', parent.innerHTML);
+}
+
+function loadData(){
+    parent.innerHTML = localStorage.getItem('data');
+}
+
+loadData();
